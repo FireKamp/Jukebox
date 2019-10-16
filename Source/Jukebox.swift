@@ -222,7 +222,7 @@ open class Jukebox: NSObject, JukeboxItemDelegate {
     fileprivate var player                       :   AVPlayer?
     fileprivate var progressObserver             :   AnyObject!
     fileprivate var backgroundIdentifier         =   UIBackgroundTaskIdentifier.invalid
-    public(set) open weak var delegate    :   JukeboxDelegate?
+    fileprivate(set) open weak var delegate    :   JukeboxDelegate?
     
     fileprivate (set) open var playIndex       =   0
     fileprivate (set) open var queuedItems     :   [JukeboxItem]!
