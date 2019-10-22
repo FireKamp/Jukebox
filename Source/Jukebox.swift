@@ -167,7 +167,7 @@ extension Jukebox {
     - parameter item: item to be removed
     */
     public func remove(item: JukeboxItem) {
-        if let index = queuedItems.index(where: {$0.identifier == item.identifier}) {
+        if let index = queuedItems.firstIndex(where: {$0.identifier == item.identifier}) {
             queuedItems.remove(at: index)
         }
     }
@@ -297,7 +297,7 @@ open class Jukebox: NSObject, JukeboxItemDelegate {
     
     func jukeboxItemDidLoadPlayerItem(_ item: JukeboxItem) {
         delegate?.jukeboxDidLoadItem(self, item: item)
-        let index = queuedItems.index{$0 === item}
+        let index = queuedItems.firstIndex{$0 === item}
         
         guard let playItem = item.playerItem
             , state == .loading && playIndex == index else {return}
@@ -420,7 +420,7 @@ open class Jukebox: NSObject, JukeboxItemDelegate {
         guard let player = player , player.currentItem?.duration.isValid == true else {return}
         progressObserver = player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(0.05, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil, using: { [unowned self] (time : CMTime) -> Void in
             self.timerAction()
-        }) as AnyObject!
+        }) as AnyObject?
     }
     
     fileprivate func stopProgressTimer() {
